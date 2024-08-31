@@ -13,6 +13,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from .__init__ import auth
 from app.models import User
+from app.main import main
+from app.forms import LoginForm, SignupForm, ResetPasswordForm
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -20,9 +22,11 @@ def login():
     """
     Handling login credentials of a user
     """
+    form = LoginForm()
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
         
         # Validating the username and password
         if not username or not password:
@@ -40,11 +44,11 @@ def login():
             # Safely ensuring that the password is correct for the user
             if check_password_hash(stored_hash, password):
                 login_user(user)
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('main.dashboard'))
             else:
                 flash("Incorrect password. Please try again or reset your password.")
                 return redirect(url_for('auth.login'))
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -53,18 +57,20 @@ def signup():
     Creating a new user and storing the
     user's credentials in the database
     """
+    form = SignupForm()
     if request.method == 'POST':
-        first_name = request.form.get('first name')
-        last_name = request.form.get('last name')
-        email = request.form.get('email')
-        age = request.form.get('age')
-        username = request.form.get('username')
-        password = request.form.get('password')
-        sport = request.form.get('sport')
-        height = request.form.get('height')
-        country = request.form.get('country')
-        state = request.form.get ('state')
-        bio = request.form.get('bio')
+        if form.validate_on_submit():
+            first_name = form.first_name.data
+            last_name = form.last_name.data
+            email = form.email.data
+            age = form.age.data
+            username = form.username.data
+            password = form.password.data
+            sport = form.sport.data
+            height = form.height.data
+            country = form.country.data
+            state = form.state.data
+            bio = form.bio.data
 
         # Checking if the user exists in the database
         user = User.get_user_by_username(username)
@@ -77,14 +83,14 @@ def signup():
             user = User(username=username, email=email,
                         password=hashed_password, age=age, first_name=first_name,
                         last_name=last_name, sport=sport, height=height,
-                        country=country, state=state, bio=bio)
+                        ountry=country, state=state, bio=bio)
             # Adding the user to the database
             db.session.add(user)
             db.session.commit()
             # Success message
             flash("Account created successfully")
             return redirect(url_for('auth.login'))
-    return render_template('signup.html')
+    return render_template('signup.html', form=form)
 
 
 @auth.route('/logout')
@@ -105,9 +111,11 @@ def reset_password():
     In case of a forgotten password or an incorrect password
     this function handles a password reset for the user
     """
+    form = ResetPasswordForm()
     if request.method == 'POST':
-        username = request.form.get('username')
-        new_password = request.form.get('new password')
+        if form.validate_on_submit():
+            username = form.username.data
+            new_password = form.new_password.data
         user = User.get_user_by_username(username)
         if user:
             hashed_password = generate_password_hash(new_password)
@@ -120,4 +128,4 @@ def reset_password():
         else:
             flash("Incorrect username provided, please check and try again.")
             return redirect(url_for('auth.reset_password'))
-    return render_template('reset_password.html')
+    return render_template('reset_password.html', form=form)
