@@ -10,23 +10,25 @@ import os
 import logging
 import json
 import requests
+import secrets
 from datadog import initialize, api
 from datadog import DogStatsd
+from urllib.parse import quote_plus
 
 
-DB_USER = os.getenv('ATHLETES_HUB_DB_USER')
-DB_PWD = os.getenv('ATHLETES_HUB_DB_PWD')
-DB_HOST = os.getenv('ATHLETES_HUB_DB_HOST')
-DB_PORT = os.getenv('ATHLETES_HUB_DB_PORT')
+DB_USER = os.getenv('ATHLETES_HUB_DB_USER', 'athlete')
+DB_PWD = quote_plus(os.getenv('ATHLETES_HUB_DB_PWD', 'Sport@123'))
+DB_HOST = os.getenv('ATHLETES_HUB_DB_HOST', 'localhost')
+DB_PORT = os.getenv('ATHLETES_HUB_DB_PORT', '3306')
 
 class BaseConfig:
     """
     The Base class with common settings that applies
     to all environments.
     """
-    SECRET_KEY_FLASK = os.getenv('SECRET_KEY_FLASK')
+    SECRET_KEY_FLASK = secrets.token_urlsafe(50)
 
-    SQLALCHEMY_DATABASE_URI = f'mysql+mysqlconnector://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db'
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
@@ -92,7 +94,7 @@ class ProductionConfig(BaseConfig):
     """
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY_FLASK')
-    SQLALCHEMY_DATABASE_URI = f'mysql+mysqlconnector://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db'
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SECURE_SSL_REDIRECT = True
@@ -108,3 +110,9 @@ class ProductionConfig(BaseConfig):
         handler.setFormatter(formatter)
         app.logger.addHandler(handler)
         app.logger.setLevel(logging.INFO)
+
+config = {
+        'development': DevelopmentConfig,
+        'testing': TestingConfig,
+        'production': ProductionConfig
+}

@@ -11,6 +11,7 @@ from flask_login import login_required, current_user
 from .__init__ import main
 from app.models import Athlete, Coach, Message, Notification
 from app.forms import ProfileForm
+from app.extensions import db
 
 
 @main.route('/dashboard')

@@ -22,13 +22,15 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.string(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    sport = db.Column(db.string(50), nullable=False)
+    sport = db.Column(db.String(50), nullable=False)
     height = db.Column(db.String(10), nullable=False)
     country = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
     bio = db.Column(db.Text, nullable=True)
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
 
     # Defining relationships between models
     messages = db.relationship('Message', backref='user', lazy=True)
@@ -101,7 +103,7 @@ class Message(db.Model):
     """
     __tablename__ = 'messages'
 
-    id = db.Column(db.Integerx, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, default=datetime.utcnow)

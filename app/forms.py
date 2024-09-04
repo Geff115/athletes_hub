@@ -7,6 +7,7 @@ Athletes Hub uses.
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField, SubmitField
+from wtforms import SelectField, RadioField, BooleanField
 from wtforms import PasswordField
 from wtforms.validators import DataRequired, Email
 
@@ -60,3 +61,13 @@ class ResetPasswordForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
+
+class ManageUsersForm(FlaskForm):
+    """
+    This form is only accessible to admin users to handle user
+    accounts, i.e activating, deactivating, or deletion
+    """
+    user = SelectField('Users', choices=[])
+    action = RadioField('Action', choices=[('activate', 'Activate'), ('deactivate', 'Deactivate'), ('delete', 'Delete')])
+    confirm_delete = BooleanField('Confirm Deletion')
+    submit = SubmitField('Submit')

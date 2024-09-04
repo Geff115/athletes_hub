@@ -6,10 +6,8 @@ application Athletes Hub uses.
 
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_login import LoginManager
 
 
 db = SQLAlchemy()
-migrations = Migrate()
 login_manager = LoginManager()

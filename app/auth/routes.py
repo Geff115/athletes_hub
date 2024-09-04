@@ -15,6 +15,7 @@ from .__init__ import auth
 from app.models import User
 from app.main import main
 from app.forms import LoginForm, SignupForm, ResetPasswordForm
+from app.extensions import db
 
 
 @auth.route('/login', methods=['GET', 'POST'])
