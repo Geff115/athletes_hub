@@ -5,7 +5,7 @@ athletes_hub_db using SQLAlchemy ORM
 """
 
 
-from .extensions import db
+from app.extensions import db
 from flask_login import UserMixin
 from datetime import datetime
 
@@ -33,10 +33,11 @@ class User(UserMixin, db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
     # Defining relationships between models
-    messages = db.relationship('Message', backref='user', lazy=True)
-    notification = db.relationship('Notification', backref='user', lazy=True)
-    athlete = db.relationship('Athlete', backref='user', uselist=False)
-    coach = db.relationship('Coach', backref='user', uselist=False)
+    sent_messages = db.relationship('Message', primaryjoin="User.id == Message.sender_id", back_populates='sender', foreign_keys='Message.sender_id')
+    received_messages = db.relationship('Message', primaryjoin="User.id == Message.receiver_id", back_populates='receiver', foreign_keys='Message.receiver_id')
+    notifications = db.relationship('Notification', back_populates='user', foreign_keys='Notification.user_id')
+    athlete = db.relationship('Athlete', back_populates='user', uselist=False, foreign_keys='Athlete.user_id')
+    coach = db.relationship('Coach', back_populates='user', uselist=False, foreign_keys='Coach.user_id')
 
     def __repr__(self):
         """
@@ -67,6 +68,9 @@ class Athlete(db.Model):
     skills = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # Defining relationship between the User and Athlete
+    user = db.relationship('User', back_populates='athlete')
+
     def __repr__(self):
         """
         String representation of an Athlete object
@@ -89,6 +93,9 @@ class Coach(db.Model):
     bio = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # Defining the relationship between Coach and User
+    user = db.relationship('User', back_populates='coach')
+
     def __repr__(self):
         """
         String representation of a Coach object
@@ -106,7 +113,12 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    content = db.Column(db.Text, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Defining relationship with the User table explicitly
+    sender = db.relationship('User', back_populates='sent_messages', foreign_keys=[sender_id])
+    receiver = db.relationship('User', back_populates='received_messages', foreign_keys=[receiver_id])
 
     def __repr__(self):
         """
@@ -126,6 +138,9 @@ class Notification(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     message = db.Column(db.String(255), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Defining relationship with the User table
+    user = db.relationship('User', back_populates='notifications')
 
     def __repr__(self):
         """

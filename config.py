@@ -26,7 +26,7 @@ class BaseConfig:
     The Base class with common settings that applies
     to all environments.
     """
-    SECRET_KEY_FLASK = secrets.token_urlsafe(50)
+    SECRET_KEY = secrets.token_urlsafe(50)
 
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -92,8 +92,9 @@ class ProductionConfig(BaseConfig):
     Ensuring the application runs safely and efficiently in a
     production environment.
     """
-    DEBUG = False
-    SECRET_KEY = os.getenv('SECRET_KEY_FLASK')
+    DEBUG = True
+    SECRET_KEY = BaseConfig.SECRET_KEY
+    print(SECRET_KEY)
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True

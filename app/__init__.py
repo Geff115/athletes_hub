@@ -4,9 +4,9 @@ from flask import render_template
 from config import config
 from .extensions import db, login_manager
 from flask_migrate import Migrate
-from .auth import auth as auth_blueprint
-from .main import main as main_blueprint
-from .admin import admin as admin_blueprint
+from app.auth import auth as auth_blueprint
+from app.main import main as main_blueprint
+from app.admin import admin as admin_blueprint
 
 
 def create_app(config_name=None):
@@ -25,6 +25,8 @@ def create_app(config_name=None):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(main_blueprint)
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
+
+    print("Main blueprint registered")
 
     # Handling errors for the routes
     @app.errorhandler(404)

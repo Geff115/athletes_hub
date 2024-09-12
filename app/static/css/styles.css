@@ -41,7 +41,7 @@ a {
 }
 
 .hero {
-    background-image: url('/img/full-shot-man-playing-basketball.jpg');
+    background-image: url('../img/full-shot-man-playing-basketball.jpg');
     background-position: center;
     background-size: cover;
     background-attachment: fixed;

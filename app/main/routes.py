@@ -8,11 +8,22 @@ the authenticated users
 from flask import request, render_template, redirect
 from flask import url_for, flash
 from flask_login import login_required, current_user
-from .__init__ import main
+from . import main
 from app.models import Athlete, Coach, Message, Notification
 from app.forms import ProfileForm
 from app.extensions import db
 
+
+@main.route('/')
+def homepage():
+    """
+    This is the homepage route
+    """
+    return render_template('homepage.html')
+
+@main.route('/test')
+def test():
+    return 'Test route is working'
 
 @main.route('/dashboard')
 @login_required

@@ -11,11 +11,15 @@ from flask import request
 from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from .__init__ import auth
+from . import auth
 from app.models import User
 from app.main import main
 from app.forms import LoginForm, SignupForm, ResetPasswordForm
 from app.extensions import db
+import logging
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -25,9 +29,11 @@ def login():
     """
     form = LoginForm()
     if request.method == 'POST':
+        logging.debug('POST request received')
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
+            logging.debug(f'Username: {username}, Password: {password}')
         
         # Validating the username and password
         if not username or not password:
@@ -49,6 +55,7 @@ def login():
             else:
                 flash("Incorrect password. Please try again or reset your password.")
                 return redirect(url_for('auth.login'))
+    logging.debug('Rendering login form')
     return render_template('login.html', form=form)
 
 
@@ -89,7 +96,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
             # Success message
-            flash("Account created successfully")
+            flash("Account created successfully! You will be redirected to login to your account.")
             return redirect(url_for('auth.login'))
     return render_template('signup.html', form=form)
 
@@ -130,3 +137,7 @@ def reset_password():
             flash("Incorrect username provided, please check and try again.")
             return redirect(url_for('auth.reset_password'))
     return render_template('reset_password.html', form=form)
+
+@auth.route('/test')
+def test():
+    return "Auth Blueprint is working"
