@@ -43,7 +43,7 @@ a {
 .hero {
     background-image: url('../img/full-shot-man-playing-basketball.jpg');
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-attachment: fixed;
     position: relative;
     z-index: 2;
@@ -58,4 +58,28 @@ a {
     left: 0;
     background-color: rgba(21, 20, 51, 0.8);
     z-index: -1;
+}
+
+.custom-container {
+	padding: 20px;
+	margin: auto;
+	max-width: 1200px;
+	background-color: #BEBEBE;
+}
+
+@media (min-width: 1400px) {
+	.custom-container {
+		max-width: 1400px;
+	}
+}
+
+.footer {
+	background-color: #BEBEBE;
+	padding: 10px;
+	text-align: center;
+}
+
+.footer p {
+	font-size: 15px;
+	color: #666;
 }

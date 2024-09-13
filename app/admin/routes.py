@@ -23,7 +23,7 @@ def manage_users():
     """
     if not current_user.is_admin:
         flash("You do not have permission to this page.")
-        return redirect(url_for('home'))
+        return redirect(url_for('main.homepage'))
 
     all_users = User.query.all()
     form = ManageUsersForm()

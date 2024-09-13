@@ -78,6 +78,7 @@ def signup():
             height = form.height.data
             country = form.country.data
             state = form.state.data
+            role = form.role.data
             bio = form.bio.data
 
         # Checking if the user exists in the database
@@ -91,7 +92,7 @@ def signup():
             user = User(username=username, email=email,
                         password=hashed_password, age=age, first_name=first_name,
                         last_name=last_name, sport=sport, height=height,
-                        ountry=country, state=state, bio=bio)
+                        country=country, state=state, role=role, bio=bio)
             # Adding the user to the database
             db.session.add(user)
             db.session.commit()

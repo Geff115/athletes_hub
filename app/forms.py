@@ -26,6 +26,7 @@ class SignupForm(FlaskForm):
     height = StringField('Height', validators=[DataRequired()])
     country = StringField('Country', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
+    role = StringField('Role', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired(message='Tell the world about you!')])
     submit = SubmitField('Signup')
 
