@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+  <div class="bg-primary text-white py-5 mb-4">
+    <div class="container">
+      <h1 class="display-4 text-center">User Profile</h1>
+      <p class="lead text-center mb-0">Update your profile information below</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <!-- Use Flask-WTF form object and CSRF token -->
+        <form method="POST" action="{{ url_for('main.profile') }}">
+          {{ form.hidden_tag() }}
+
+          <!-- General Information -->
+          <div class="bg-white rounded shadow-sm p-4 mb-4">
+            <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-person me-2"></i>General Information</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="first_name" class="form-label">First Name</label>
+                {{ form.first_name(class="form-control", placeholder="Enter your first name") }}
+                <!-- Display error message for validation -->
+                {% if form.first_name.errors %}
+                <div class="text-danger">
+                  {{ form.first_name.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="last_name" class="form-label">Last Name</label>
+                {{ form.last_name(class="form-control", placeholder="Enter your last name") }}
+                {% if form.last_name.errors %}
+                <div class="text-danger">
+                  {{ form.last_name.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                {{ form.age(class="form-control", placeholder="Enter your age") }}
+                {% if form.age.errors %}
+                <div class="text-danger">
+                  {{ form.age.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="height" class="form-label">Height</label>
+                {{ form.height(class="form-control", placeholder="Enter your height") }}
+                {% if form.height.errors %}
+                <div class="text-danger">
+                  {{ form.height.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="country" class="form-label">Country</label>
+                {{ form.country(class="form-control", placeholder="Enter your country") }}
+                {% if form.country.errors %}
+                <div class="text-danger">
+                  {{ form.country.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="state" class="form-label">State</label>
+                {{ form.state(class="form-control", placeholder="Enter your state") }}
+                {% if form.state.errors %}
+                <div class="text-danger">
+                  {{ form.state.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label for="bio" class="form-label">Bio</label>
+                {{ form.bio(class="form-control", placeholder="Tell us about yourself", rows="4") }}
+                {% if form.bio.errors %}
+                <div class="text-danger">
+                  {{ form.bio.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Athlete Section (if user is an athlete) -->
+          {% if user.athlete %}
+          <div class="bg-white rounded shadow-sm p-4 mb-4">
+            <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-person-bounding-box me-2"></i>Athlete Information</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="position" class="form-label">Position</label>
+                {{ form.position(class="form-control", placeholder="Your playing position") }}
+                {% if form.position.errors %}
+                <div class="text-danger">
+                  {{ form.position.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="skills" class="form-label">Skills</label>
+                {{ form.skills(class="form-control", placeholder="Your skills") }}
+                {% if form.skills.errors %}
+                <div class="text-danger">
+                  {{ form.skills.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label for="achievements" class="form-label">Achievements</label>
+                {{ form.achievements(class="form-control", placeholder="Your achievements", rows="4") }}
+                {% if form.achievements.errors %}
+                <div class="text-danger">
+                  {{ form.achievements.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Coach Section (if user is a coach) -->
+          {% if user.coach %}
+          <div class="bg-white rounded shadow-sm p-4 mb-4">
+            <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-clipboard-data me-2"></i>Coach Information</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="experience_years" class="form-label">Years of Experience</label>
+                {{ form.experience_years(class="form-control", placeholder="Years of coaching experience") }}
+                {% if form.experience_years.errors %}
+                <div class="text-danger">
+                  {{ form.experience_years.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="coaching_style" class="form-label">Coaching Style</label>
+                {{ form.coaching_style(class="form-control", placeholder="Your coaching style") }}
+                {% if form.coaching_style.errors %}
+                <div class="text-danger">
+                  {{ form.coaching_style.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label for="credentials" class="form-label">Credentials</label>
+                {{ form.credentials(class="form-control", placeholder="Your coaching credentials", rows="4") }}
+                {% if form.credentials.errors %}
+                <div class="text-danger">
+                  {{ form.credentials.errors[0] }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Save Button -->
+          <div class="d-flex justify-content-center mb-5">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+              <i class="bi bi-save me-2"></i>Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
