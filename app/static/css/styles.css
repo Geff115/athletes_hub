@@ -41,12 +41,12 @@ a {
 }
 
 .hero {
-    background-image: url('../img/full-shot-man-playing-basketball.jpg');
+    background-image: url('../img/BAL.jpeg');
     background-position: center;
     background-size: contain;
     background-attachment: fixed;
     position: relative;
-    z-index: 2;
+    height: 100vh;
 }
 
 .hero::after {
@@ -63,14 +63,6 @@ a {
 .custom-container {
 	padding: 20px;
 	margin: auto;
-	max-width: 1200px;
-	background-color: #BEBEBE;
-}
-
-@media (min-width: 1400px) {
-	.custom-container {
-		max-width: 1400px;
-	}
 }
 
 .footer {
@@ -82,4 +74,21 @@ a {
 .footer p {
 	font-size: 15px;
 	color: #666;
+}
+
+.hero-text span {
+	color: #000000;
+}
+
+.hero-text p {
+	font-size: 14px;
+	line-height: 1.2;
+	font-family: 'Lobster', cursive;
+}
+
+.logo {
+	width: 50px;
+	height: auto;
+	margin-right: 10px;
+	border-radius: 5px;
 }

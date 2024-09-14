@@ -34,11 +34,13 @@
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg py-3 sticky-top navbar-light bg-white">
+    <nav class="navbar navbar-expand-lg py-0 sticky-top bg-white mb-0">
         <div class="container custom-container">
-		<a class="navbar-brand" href="{{ url_for('main.homepage') }}">
-                <span class="fw-bold">Athletes Hub</span>
-            </a>
+		<div class="hero-text">
+			<img src="static/img/Athletes_hub_logo2.png" alt="Athletes Hub logo" class="logo">
+			<span class="fw-bold">Athletes Hub</span>
+			<p>...Breaking boundaries, creating possibilities.<p>
+		</div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -73,8 +75,12 @@
             <div class="row">
                 <div class="col-lg-7 mx-auto text-center">
                     <h1 class="display-4 text-white">Welcome to Athletes Hub</h1>
-                    <p class="text-white my-3">Your platform to connect with coaches and showcase your talents.
-		    Learn more about our mission to help underprivileged athletes connect with coaches from around the world.</p>
+                    <p class="text-white my-3">Our mission is to help you connect with scouts from around the world, irrespective of your social status, 
+		    background, or beliefs.
+		    We aim to breach the limitations that comes with playing your sport at a professional level here in Africa. Due to the large number of youths 
+		    playing either Football or Basketball in Africa, Athletes Hub was created for this purpose, focusing strictly on Basketball and Football athletes. 
+		    Ready to present yourself to scouts from around the world? Get started with us today by clicking on the button below.
+		    </p>
 		    <a href="{{ url_for('auth.signup') }}" class="btn me-2 btn-primary">Get Started</a>
 		    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light">Login</a>
                 </div>

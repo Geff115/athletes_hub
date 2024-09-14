@@ -21,9 +21,6 @@ def homepage():
     """
     return render_template('homepage.html')
 
-@main.route('/test')
-def test():
-    return 'Test route is working'
 
 @main.route('/dashboard')
 @login_required

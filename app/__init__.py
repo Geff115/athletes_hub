@@ -26,8 +26,6 @@ def create_app(config_name=None):
     app.register_blueprint(main_blueprint)
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
-    print("Main blueprint registered")
-
     # Handling errors for the routes
     @app.errorhandler(404)
     def page_not_found(error):

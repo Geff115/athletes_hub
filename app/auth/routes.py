@@ -111,7 +111,7 @@ def logout():
     """
     logout_user()
     flash("Logout successful! Please login again to access your account.")
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('main.homepage'))
 
 
 @auth.route('/reset_password', methods=['GET', 'POST'])
@@ -138,7 +138,3 @@ def reset_password():
             flash("Incorrect username provided, please check and try again.")
             return redirect(url_for('auth.reset_password'))
     return render_template('reset_password.html', form=form)
-
-@auth.route('/test')
-def test():
-    return "Auth Blueprint is working"

@@ -94,7 +94,6 @@ class ProductionConfig(BaseConfig):
     """
     DEBUG = True
     SECRET_KEY = BaseConfig.SECRET_KEY
-    print(SECRET_KEY)
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
