@@ -114,7 +114,12 @@
                                 </div>
                                 <div class="col-12">
                                     {{ form.role.label(class="form-label") }}
-                                    {{ form.role(class="form-select", id="inputState") }}
+                                    <!-- Flask-WTF SelectField with custom Bootstrap styling -->
+                                    <select class="form-select" id="role" name="role" aria-label="Role selection">
+                                        <option disabled selected></option>
+                                        <option value="Athlete">Athlete</option>
+                                        <option value="Coach">Coach</option>
+                                    </select>
                                     {% if form.role.errors %}
                                         <div class="text-danger">
                                             {% for error in form.role.errors %}
@@ -125,7 +130,11 @@
                                 </div>
                                 <div class="col-12">
                                     {{ form.sport.label(class="form-label") }}
-                                    {{ form.sport(class="form-select", id="inputState") }}
+                                    <select class="form-select" id="sport" name="sport" aria-label="Sport selection">
+                                        <option disabled selected></option>
+                                        <option value="Football">Football</option>
+                                        <option value="Basketball">Basketball</option>
+                                    </select>
                                     {% if form.sport.errors %}
                                         <div class="text-danger">
                                             {% for error in form.sport.errors %}
