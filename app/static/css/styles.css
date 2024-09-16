@@ -41,12 +41,10 @@ a {
 }
 
 .hero {
-    background-image: url('../img/BAL.jpeg');
     background-position: center;
     background-size: contain;
     background-attachment: fixed;
     position: relative;
-    height: 100vh;
 }
 
 .hero::after {

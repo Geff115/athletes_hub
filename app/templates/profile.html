@@ -28,64 +28,64 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="first_name" class="form-label">First Name</label>
-                {{ form.first_name(class="form-control", placeholder="Enter your first name") }}
+                {{ form.first_name(class="form-control" + (" is-invalid" if form.first_name.errors else ""), placeholder="Enter your first name") }}
                 <!-- Display error message for validation -->
                 {% if form.first_name.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.first_name.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="last_name" class="form-label">Last Name</label>
-                {{ form.last_name(class="form-control", placeholder="Enter your last name") }}
+                {{ form.last_name(class="form-control" + (" is-invalid" if form.last_name.errors else ""), placeholder="Enter your last name") }}
                 {% if form.last_name.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.last_name.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="age" class="form-label">Age</label>
-                {{ form.age(class="form-control", placeholder="Enter your age") }}
+                {{ form.age(class="form-control" + (" is-invalid" if form.age.errors else ""), placeholder="Enter your age") }}
                 {% if form.age.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.age.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="height" class="form-label">Height</label>
-                {{ form.height(class="form-control", placeholder="Enter your height") }}
+                {{ form.height(class="form-control" + (" is-invalid" if form.height.errors else ""), placeholder="Enter your height") }}
                 {% if form.height.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.height.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="country" class="form-label">Country</label>
-                {{ form.country(class="form-control", placeholder="Enter your country") }}
+                {{ form.country(class="form-control" + (" is-invalid" if form.country.errors else ""), placeholder="Enter your country") }}
                 {% if form.country.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.country.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="state" class="form-label">State</label>
-                {{ form.state(class="form-control", placeholder="Enter your state") }}
+                {{ form.state(class="form-control" + (" is-invalid" if form.state.errors else ""), placeholder="Enter your state") }}
                 {% if form.state.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.state.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-12">
                 <label for="bio" class="form-label">Bio</label>
-                {{ form.bio(class="form-control", placeholder="Tell us about yourself", rows="4") }}
+                {{ form.bio(class="form-control" + (" is-invalid" if form.bio.errors else ""), placeholder="Tell us about yourself", rows="4") }}
                 {% if form.bio.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.bio.errors[0] }}
                 </div>
                 {% endif %}
@@ -100,27 +100,27 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="position" class="form-label">Position</label>
-                {{ form.position(class="form-control", placeholder="Your playing position") }}
+                {{ form.position(class="form-control" + (" is-invalid" if form.position.errors else ""), placeholder="Your playing position") }}
                 {% if form.position.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.position.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="skills" class="form-label">Skills</label>
-                {{ form.skills(class="form-control", placeholder="Your skills") }}
+                {{ form.skills(class="form-control" + (" is-invalid" if form.skills.errors else ""), placeholder="Your skills") }}
                 {% if form.skills.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.skills.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-12">
                 <label for="achievements" class="form-label">Achievements</label>
-                {{ form.achievements(class="form-control", placeholder="Your achievements", rows="4") }}
+                {{ form.achievements(class="form-control" + (" is-invalid" if form.achievements.errors else ""), placeholder="Your achievements", rows="4") }}
                 {% if form.achievements.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.achievements.errors[0] }}
                 </div>
                 {% endif %}
@@ -136,27 +136,27 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="experience_years" class="form-label">Years of Experience</label>
-                {{ form.experience_years(class="form-control", placeholder="Years of coaching experience") }}
+                {{ form.experience_years(class="form-control" + (" is-invalid" if form.experience_years.errors else ""), placeholder="Years of coaching experience") }}
                 {% if form.experience_years.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.experience_years.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-md-6">
                 <label for="coaching_style" class="form-label">Coaching Style</label>
-                {{ form.coaching_style(class="form-control", placeholder="Your coaching style") }}
+                {{ form.coaching_style(class="form-control" + (" is-invalid" if form.coaching_style.errors else ""), placeholder="Your coaching style") }}
                 {% if form.coaching_style.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.coaching_style.errors[0] }}
                 </div>
                 {% endif %}
               </div>
               <div class="col-12">
                 <label for="credentials" class="form-label">Credentials</label>
-                {{ form.credentials(class="form-control", placeholder="Your coaching credentials", rows="4") }}
+                {{ form.credentials(class="form-control" + (" is-invalid" if form.credentials.errors else ""), placeholder="Your coaching credentials", rows="4") }}
                 {% if form.credentials.errors %}
-                <div class="text-danger">
+                <div class="invalid-feedback">
                   {{ form.credentials.errors[0] }}
                 </div>
                 {% endif %}

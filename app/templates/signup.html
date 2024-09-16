@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Sign up</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
@@ -33,40 +34,49 @@
 							{% endwith %}
 
 							<!-- Signup form -->
-							<form method="POST" action="{{ url_for('auth.signup') }}" class="row g-3" class="needs-validation">
+							<form method="POST" action="{{ url_for('auth.signup') }}" class="row g-3 needs-validation">
                                 {{ form.hidden_tag() }}
                                 <div class="col-md-6">
                                     {{ form.first_name.label(class="form-label") }}
-                                    {{ form.first_name(class="form-control", placeholder="First name", aria_label="First name") }}
+                                    {{ form.first_name(class="form-control is-invalid" if form.first_name.errors else "form-control is-valid" if form.first_name.data 
+				    else "form-control", placeholder="First name", aria_label="First name") }}
                                     {% if form.first_name.errors %}
-                                        <div class="text-danger">
+                                        <div class="invalid-feedback">
                                             {% for error in form.first_name.errors %}
                                                 <small>{{ error }}</small>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
+                                    {% else %}
+				    	<div class="valid-feedback">Looks good!</div>
+				    {% endif %}
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.last_name.label(class="form-label") }}
-                                    {{ form.last_name(class="form-control", placeholder="Last name", aria_label="Last name") }}
+                                    {{ form.last_name(class="form-control is-invalid" if form.last_name.errors else "form-control is-valid" if form.last_name.data 
+				    else "form-control", placeholder="Last name", aria_label="Last name") }}
                                     {% if form.last_name.errors %}
-                                        <div class="text-danger">
+                                        <div class="invalid-feedback">
                                             {% for error in form.last_name.errors %}
                                                 <small>{{ error }}</small>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
+                                    {% else %}
+				    	<div class="valid-feedback">Looks good!</div>
+				    {% endif %}
                                 </div>
                                 <div class="col-12">
                                     {{ form.email.label(class="form-label") }}
-                                    {{ form.email(class="form-control", placeholder="text@example.com", id="inputEmail4") }}
+                                    {{ form.email(class="form-control is-invalid" if form.email.errors else "form-control is-valid" if form.email.data 
+				    else "form-control", placeholder="text@example.com", id="inputEmail4") }}
                                     {% if form.email.errors %}
-                                        <div class="text-danger">
+                                        <div class="invalid-feedback">
                                             {% for error in form.email.errors %}
                                                 <small>{{ error }}</small>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
+                                    {% else %}
+				    	<div class="valid-feedback">Email looks valid!</div>
+				    {% endif %}
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.age.label(class="form-label") }}
@@ -103,14 +113,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.password.label(class="form-label") }}
-                                    {{ form.password(class="form-control", id="inputPassword4") }}
+                                    {{ form.password(class="form-control is-invalid" if form.password.errors else "form-control is-valid" if form.password.data 
+				    else "form-control", id="inputPassword4") }}
                                     {% if form.password.errors %}
-                                        <div class="text-danger">
+                                        <div class="invalid-feedback">
                                             {% for error in form.password.errors %}
                                                 <small>{{ error }}</small>
                                             {% endfor %}
                                         </div>
-                                    {% endif %}
+                                    {% else %}
+				    	<div class="valid-feedback">Password looks strong!</div>
+				    {% endif %}
                                 </div>
                                 <div class="col-12">
                                     {{ form.role.label(class="form-label") }}
@@ -176,7 +189,7 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                                <div class="col-12 d-flex align-items-center">
+                                <div class="col-12 d-flex justify-content-center">
                                     {{ form.submit(class="btn btn-primary mx-auto") }}
                                 </div>
                             </form>
