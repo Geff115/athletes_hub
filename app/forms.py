@@ -28,7 +28,7 @@ class SignupForm(FlaskForm):
     state = StringField('State', validators=[DataRequired()])
     role = StringField('Role', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired(message='Tell the world about you!')])
-    submit = SubmitField('Signup')
+    submit = SubmitField('Sign up')
 
 
 class ProfileForm(FlaskForm):
