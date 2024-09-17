@@ -70,11 +70,11 @@
       <div class="offcanvas-body">
         <nav class="nav flex-column">
           <a class="nav-link" href="#"><i class="bi bi-search me-2"></i>Search</a>
-          <a class="nav-link" href="#"><i class="bi bi-pencil-square me-2"></i>Edit Profile</a>
+	  <a class="nav-link" href="{{ url_for('main.profile') }}"><i class="bi bi-pencil-square me-2"></i>Edit Profile</a>
           <a class="nav-link" href="#"><i class="bi bi-chat me-2"></i>Messages</a>
           <a class="nav-link" href="#"><i class="bi bi-bell me-2"></i>Notifications</a>
           <br>
-          <a class="nav-link" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+	  <a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
           <a class="nav-link" href="#"><i class="bi bi-moon me-2"></i>Dark Mode</a>
         </nav>
       </div>
@@ -86,18 +86,23 @@
         <h5 class="mb-3">User Profile</h5>
         
         <!-- Conditionally display user information -->
-        <p><strong>Name:</strong> {{ current_user.name }}</p>
+        <p><strong>First name:</strong> {{ current_user.first_name }}</p>
+	<p><strong>Last name:</strong> {{ current_user.last_name }}</p>
         <p><strong>Email:</strong> {{ current_user.email }}</p>
-        <p><strong>Role:</strong> {{ user_data.role }}</p>
+        <p><strong>Role:</strong> {{ current_user.role }}</p>
 
         <!-- Athlete Information -->
-        {% if user_data.role == 'Athlete' %}
+        {% if current_user.role == 'Athlete' %}
+	  <p><strong>Country:</strong> {{ current_user.country }}</p>
+	  <p><strong>State:</strong> {{ current_user.state }}</p>
           <p><strong>Position:</strong> {{ user_data.position }}</p>
           <p><strong>Skills:</strong> {{ user_data.skills }}</p>
           <p><strong>Achievements:</strong> {{ user_data.achievements }}</p>
 
         <!-- Coach Information -->
-        {% elif user_data.role == 'Coach' %}
+        {% elif current_user.role == 'Coach' %}
+	  <p><strong>Country:</strong> {{ current_user.country }}</p>
+	  <p><strong>State:</strong> {{ current_user.state }}</p>
           <p><strong>Years of Experience:</strong> {{ user_data.experience_years }}</p>
           <p><strong>Coaching Style:</strong> {{ user_data.coaching_style }}</p>
           <p><strong>Credentials:</strong> {{ user_data.credentials }}</p>

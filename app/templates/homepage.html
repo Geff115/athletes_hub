@@ -57,7 +57,7 @@
 				<a class="dropdown-item" href="mailto:athleteshub9@gmail.com">Email: athleteshub9@gmail.com</a>
 				<a class="dropdown-item" href="mailto:info@athleteshub.com">Email: info@athleteshub.com</a>
 				<hr class="dropdown-divider">
-				<a class="dropdown-item" href="https://X.com/athleteshub" target="_blank">X: @AthletesHub</a>
+				<a class="dropdown-item" href="https://X.com/athleteshub" target="_blank">X (Twitter): @AthletesHu19974</a>
 			</div>
                     </div>
                     <li class="nav-item">
@@ -69,36 +69,63 @@
         </div>
     </nav><!-- //NAVBAR -->
 
-    <!-- HERO -->
-    <div class="hero vh-100 d-flex align-items-center" id="home">
-        <div class="container inner-container">
-	    <script src="{{ url_for('static', filename='js/slideshow.js') }}"></script>
-            <div class="row">
-                <div class="col-lg-7 mx-auto text-center">
-                    <h1 class="display-4 text-white">Welcome to Athletes Hub</h1>
-                    <p class="text-white my-3">Our mission is to help you connect with scouts from around the world, irrespective of your social status, 
-		    background, or beliefs.
-		    We aim to breach the limitations that comes with playing your sport at a professional level here in Africa. Due to the large number of youths 
-		    playing either Football or Basketball in Africa, Athletes Hub was created for this purpose, focusing strictly on Basketball and Football athletes. 
-		    Ready to present yourself to scouts from around the world? Get started with us today by clicking on the button below.
-		    </p>
-		    <a href="{{ url_for('auth.signup') }}" class="btn me-2 btn-primary">Get Started</a>
-		    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light">Login</a>
+    <!-- Main content, e.g Hero, slideshow, body content -->
+    <main class="flex-grow-1">
+        <div class="hero d-flex align-items-center justify-content-center" id="home">
+            <div class="container inner-container">
+		<div class="row justify-content-center">
+	            <script src="{{ url_for('static', filename='js/slideshow.js') }}"></script>
+
+	            <!-- Slideshow section -->
+	            <div id="slideshow" class="carousel slide" data-bs-ride="carousel">
+	                <div class="carousel-inner">
+		            <div class="carousel-item active">
+		                <img src="{{ url_for('static', filename='img/BAL1.jpg') }}" class="d-block w-100" alt="slide 1" loading="lazy">
+		            </div>
+		            <div class="carousel-item">
+		                <img src="{{ url_for('static', filename='img/full-shot-man-playing-basketball.jpg') }}" class="d-block w-100" alt="slide 2" loading="lazy">
+		            </div>
+		            <div class="carousel-item">
+		                <img src="{{ url_for('static', filename='img/BAL3.jpg') }}" class="d-block w-100" alt="slide 3" loading="lazy">
+		            </div>
+		        </div>
+		        <button class="carousel-control-prev" type="button" data-bs-target="#slideshow" data-bs-slide="prev">
+		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		            <span class="visually-hidden">Previous</span>
+		        </button>
+		        <button class="carousel-control-next" type="button" data-bs-target="#slideshow" data-bs-slide="next">
+		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		            <span class="visually-hidden">Next</span>
+		        </button>
+	            </div>
+
+		    <!-- Hero text section -->
+		    <div class="col-lg-7 text-center">
+                        <h1 class="display-4 text-white">Welcome to Athletes Hub</h1>
+                        <p class="text-white my-3">Our mission is to help you connect with scouts from around the world, irrespective of your social status, 
+		        background, or beliefs.
+		        We aim to breach the limitations that comes with playing your sport at a professional level here in Africa. Due to the large number of youths 
+		        playing either Football or Basketball in Africa, Athletes Hub was created for this purpose, focusing strictly on Basketball and Football athletes. 
+		        Ready to present yourself to scouts from around the world? Get started with us today by clicking on the button below.
+		        </p>
+		        <a href="{{ url_for('auth.signup') }}" class="btn me-2 btn-primary">Get Started</a>
+		        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light">Login</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div><!-- //HERO -->
+    </main>
 
-    <!-- Bootstrap JS dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.mini.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-    <!-- Footer -->
+    <!-- Footer --->
     <footer class="footer">
         <div class="container">
-	    <p class="text-center">&copy; 2024 Athletes Hub. All rights reserved.</p>
+		<p class="text-center">&copy; 2024 Athletes Hub. All rights reserved.</p>
 	</div>
     </footer>
+
+    <!-- Bootstrap JS dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

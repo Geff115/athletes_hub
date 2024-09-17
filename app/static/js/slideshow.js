@@ -1,14 +1,20 @@
 /* JavaScript code for the slideshow */
 
-const heroElement = document.querySelector('.hero');
-const images = ['/img/BAL1.jpg', '/img/BAL2.jpg', '/img/BAL3.jpg'];
-let currentIndex = 0;
+// Ensuring DOM is fully loaded before running the script
+document.addEventListener("DOMContentLoaded", function () {
+	// Getting the slideshow element by its ID
+	const slideshow = document.querySelector("#slideshow");
 
-function showImage(index) {
-	heroElement.style.backgroundImage = `url(${images[index]})`;
-}
+	// Initializing the carousel if its not automatically done by Bootstrap
+	const carouselInstance = new bootstrap.Carousel(slideshow, {
+		interval: 5000,
+		wrap: true,
+		pause: 'hover',
+		ride: 'carousel'
+	});
 
-setInterval(() => {
-	currentIndex = (currentIndex + 1) % images.length;
-	showImage(currentIndex);
-}, 3000); // slide speed
+	// Listen to slide events
+	slideshow.addEventListener('slid.bs.carousel', function (event) {
+		console.log(`Slide ${event.to + 1} is now displayed`);
+	});
+});

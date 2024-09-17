@@ -93,8 +93,8 @@
             </div>
           </div>
 
-          <!-- Athlete Section (if user is an athlete) -->
-          {% if user.athlete %}
+          <!-- Athlete Section (if the current user is an athlete) -->
+          {% if current_user.athlete %}
           <div class="bg-white rounded shadow-sm p-4 mb-4">
             <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-person-bounding-box me-2"></i>Athlete Information</h2>
             <div class="row g-3">
@@ -129,8 +129,8 @@
           </div>
           {% endif %}
 
-          <!-- Coach Section (if user is a coach) -->
-          {% if user.coach %}
+          <!-- Coach Section (if the current user is a coach) -->
+          {% if current_user.coach %}
           <div class="bg-white rounded shadow-sm p-4 mb-4">
             <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-clipboard-data me-2"></i>Coach Information</h2>
             <div class="row g-3">
