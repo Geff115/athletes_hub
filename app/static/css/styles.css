@@ -69,6 +69,7 @@ a {
     justify-content: center;
     flex-direction: column;
     padding-bottom: 20px;
+    padding-top: 10px;
 }
 
 .custom-container {
