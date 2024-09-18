@@ -1,0 +1,41 @@
+/* Box-shadow for user profile and navbar */
+.box-shadow {
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Background color for offcanvas and navbar */
+.offcanvas-custom, .navbar-custom {
+	background-color: #B87333; /* Bronze color background */
+}
+
+/* White text for the navbar */
+.navbar-custom h1 {
+	color: #fff;
+}
+
+/* White text for offcanvas items */
+.offcanvas-custom .nav-link {
+	color: #fff;
+}
+
+/* Change color on hover */
+.offcanvas-custom .nav-link:hover {
+	color: #adb5bd;
+}
+
+/* Offcanvas custom width */
+.offcanvas-custom {
+	width: 300px !important;
+}
+
+/* Center-align user profile */
+#main-content {
+	text-align: center;
+}
+
+.logo {
+	width: 60px;
+	height: auto;
+	margin-right: 10px;
+	border-radius: 5px;
+}
