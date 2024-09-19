@@ -7,6 +7,8 @@ from flask_migrate import Migrate
 from app.auth import auth as auth_blueprint
 from app.main import main as main_blueprint
 from app.admin import admin as admin_blueprint
+from app.messaging.socket_handlers import socketio,  MessageNamespace
+from app.messaging.socket_handlers import NotificationNamespace
 
 
 def create_app(config_name=None):
@@ -20,11 +22,16 @@ def create_app(config_name=None):
     db.init_app(app)
     migrate = Migrate(app, db)
     login_manager.init_app(app)
+    socketio.init_app(app)
 
     # Registering the blueprints for the application routes
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(main_blueprint)
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    
+    # Registering the WebSocket namespace
+    socketio.on_namespace(MessageNamespace('/messages'))
+    socketio.on_namespace(NotificationNamespace('/notifications'))
 
     # Handling errors for the routes
     @app.errorhandler(404)

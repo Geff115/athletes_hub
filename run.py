@@ -4,8 +4,12 @@ This file runs the application
 """
 
 
-from app import create_app
+from app.__init__ import create_app
+from app.messaging.socket_handlers import socketio
+
+
+app = create_app()
 
 
 if __name__ == '__main__':
-    app.run(host=localhost, port=5000, debug=True)
+    socketio.run(app, host='localhost', port=5000, debug=True)

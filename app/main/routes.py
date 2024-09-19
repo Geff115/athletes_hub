@@ -94,3 +94,14 @@ def profile():
         return redirect(url_for('main.dashboard'))
     # on GET requests, it returns the profile page with the user's current information
     return render_template('profile.html', user=current_user, form=form)
+
+@main.route('/messages')
+@login_required
+def messages():
+    return render_template('messages.html')
+
+
+@main.route('/notifications')
+@login_required
+def notifications():
+    return render_template('notifications.html')
