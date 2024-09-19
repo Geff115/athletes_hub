@@ -27,7 +27,10 @@ const input = document.getElementById('message-input');
 form.addEventListener('submit', function(event) {
 	event.preventDefault();
 	const messageContent = input.value;
-	socket.emit('send_message', { 'message': messageContent });
+	socket.emit('send_message', {
+		'message': messageContent,
+		'receiver_id': receiverId
+	});
 	input.value = '';
 });
 

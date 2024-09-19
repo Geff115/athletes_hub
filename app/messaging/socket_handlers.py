@@ -50,28 +50,36 @@ class MessageNamespace(Namespace):
         leave_room(room)
 
 
-    def on_message(self, data):
+    def on_send_message(self, data):
         # Handle incoming message from a User
-        sender_id = data['sender_id']
-        receiver_id = data['receiver_id']
-        content = data['message']
-        
-        # Saving the message to the database
-        new_message = Message(
-                sender_id=sender_id,
-                receiver_id=receiver_id,
-                content=message_content,
-                timestamp=datetime.utcnow()
-        )
-        db.session.add(new_message)
-        db.session.commit()
+        message_content = data.get('message')
+        receiver_id = data.get('receiver_id')
 
-        # Emmitting the message to the receiver (or broadcast to room)
-        emit('new_message', {
-            'sender': current_user.username,
-            'content': message_content,
-            'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-        }, broadcast=True)
+        if message_content and receiver_id:
+            sender_id = current_user.id
+        
+            # Saving the message to the database
+            new_message = Message(
+                    sender_id=sender_id,
+                    receiver_id=receiver_id,
+                    content=message_content,
+                    timestamp=datetime.utcnow()
+            )
+
+            try:
+                db.session.add(new_message)
+                db.session.commit()
+
+                # Emmitting the message to the receiver (or broadcast to room)
+                emit('receive_message', {
+                    'message': message_content,
+                    'sender': current_user.username,
+                    'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                    'receiver_id': receiver_id
+                }, room=receiver_id)
+            except Exception as e:
+                print(f"Error saving message {e}")
+                db.session.rollback()
 
 
 class NotificationNamespace(Namespace):
@@ -93,7 +101,7 @@ class NotificationNamespace(Namespace):
 
     def on_message_sent(self, data):
         receiver_id = data['receiver_id']
-        content = f'You have a new message from {data["sender_name"]}'
+        content = f'You have a new message from {data["sender"]}'
 
         # Save the notification to the database
         new_notification = Notification(
