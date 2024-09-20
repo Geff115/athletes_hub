@@ -26,7 +26,7 @@ class BaseConfig:
     The Base class with common settings that applies
     to all environments.
     """
-    SECRET_KEY = secrets.token_urlsafe(50)
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -28,12 +28,15 @@ def login():
     Handling login credentials of a user
     """
     form = LoginForm()
+
+    username = None
+    password = None
+
     if request.method == 'POST':
-        logging.debug('POST request received')
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
-            logging.debug(f'Username: {username}, Password: {password}')
+            # logging.debug(f'Username: {username}, Password: {password}')
         
         # Validating the username and password
         if not username or not password:
