@@ -94,14 +94,14 @@ class Scout(db.Model):
     bio = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Defining the relationship between Coach and User
+    # Defining the relationship between Scout and User
     user = db.relationship('User', back_populates='scout')
 
     def __repr__(self):
         """
         String representation of a Scout object
         """
-        return f'<Coach {self.user_id}>'
+        return f'<Scout {self.user_id}>'
 
 
 class MessageStatus(Enum):
