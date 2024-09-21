@@ -73,6 +73,9 @@ class Athlete(db.Model):
     # Defining relationship between the User and Athlete
     user = db.relationship('User', back_populates='athlete')
 
+    # Defining relationship between Athlete and Media
+    media = db.relationship('Media', backref='athlete', lazy=True)
+
     def __repr__(self):
         """
         String representation of an Athlete object
@@ -96,6 +99,9 @@ class Scout(db.Model):
 
     # Defining the relationship between Scout and User
     user = db.relationship('User', back_populates='scout')
+
+    # Defining the relationship between Scout and Media
+    media = db.relationship('Media', backref='scout', lazy=True)
 
     def __repr__(self):
         """
