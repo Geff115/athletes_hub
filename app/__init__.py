@@ -9,7 +9,11 @@ from app.main import main as main_blueprint
 from app.admin import admin as admin_blueprint
 from app.messaging.socket_handlers import socketio,  MessageNamespace
 from app.messaging.socket_handlers import NotificationNamespace
+from flask_uploads import UploadSet, configure_uploads, IMAGES, ALL
 
+
+
+media = UploadSet('media', ALL)
 
 def create_app(config_name=None):
     if not config_name:
@@ -17,6 +21,13 @@ def create_app(config_name=None):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+    
+    # Configuring file uploads
+    if not os.path.exists(app.config['UPLOADED_MEDIA_DEST']): 
+        os.makedirs(app.config['UPLOADED_MEDIA_DEST'])
+
+    app.config['UPLOADED_MEDIA_DEST'] = 'uploads/media'
+    configure_uploads(app, media)
 
     # Initializing extensions
     db.init_app(app)

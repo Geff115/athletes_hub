@@ -1,4 +1,4 @@
-#!/home/gabriel/athletes_hub/venv/bin/python3
+#!/home/gabriel/athletes_hub/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

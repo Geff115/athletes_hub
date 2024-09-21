@@ -43,6 +43,16 @@ class ProfileForm(FlaskForm):
     country = StringField('Country', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired()])
+
+    # Fields specific to Athletes
+    position = StringField('Position')
+    skills = TextAreaField('Skills')
+    achievements = TextAreaField('Achievements')
+
+    # Fields specific to Scouts
+    experience_years = IntegerField('Years of Experience')
+    credentials = TextAreaField('Credentials')
+
     submit = SubmitField('Update Profile')
 
 class LoginForm(FlaskForm):

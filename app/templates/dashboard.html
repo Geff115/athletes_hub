@@ -67,11 +67,10 @@
           <p><strong>Achievements:</strong> {{ user_data.achievements }}</p>
 
         <!-- Coach Information -->
-        {% elif user_data.role == 'Coach' %}
+        {% elif user_data.role == 'Scout' %}
 	  <p><strong>Country:</strong> {{ user_data.country }}</p>
 	  <p><strong>State:</strong> {{ user_data.state }}</p>
           <p><strong>Years of Experience:</strong> {{ user_data.experience_years }}</p>
-          <p><strong>Coaching Style:</strong> {{ user_data.coaching_style }}</p>
           <p><strong>Credentials:</strong> {{ user_data.credentials }}</p>
         {% endif %}
       </div>

@@ -132,26 +132,17 @@
           </div>
           {% endif %}
 
-          <!-- Coach Section (if the current user is a coach) -->
-          {% if current_user.coach %}
+          <!-- Scout Section (if the current user is a scout) -->
+          {% if current_user.scout %}
           <div class="bg-white rounded shadow-sm p-4 mb-4">
-            <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-clipboard-data me-2"></i>Coach Information</h2>
+            <h2 class="border-bottom border-primary pb-2 mb-4"><i class="bi bi-clipboard-data me-2"></i>Scout Information</h2>
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="experience_years" class="form-label">Years of Experience</label>
-                {{ form.experience_years(class="form-control" + (" is-invalid" if form.experience_years.errors else ""), placeholder="Years of coaching experience") }}
+                {{ form.experience_years(class="form-control" + (" is-invalid" if form.experience_years.errors else ""), placeholder="Years of scouting experience") }}
                 {% if form.experience_years.errors %}
                 <div class="invalid-feedback">
                   {{ form.experience_years.errors[0] }}
-                </div>
-                {% endif %}
-              </div>
-              <div class="col-md-6">
-                <label for="coaching_style" class="form-label">Coaching Style</label>
-                {{ form.coaching_style(class="form-control" + (" is-invalid" if form.coaching_style.errors else ""), placeholder="Your coaching style") }}
-                {% if form.coaching_style.errors %}
-                <div class="invalid-feedback">
-                  {{ form.coaching_style.errors[0] }}
                 </div>
                 {% endif %}
               </div>

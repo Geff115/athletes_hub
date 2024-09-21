@@ -9,9 +9,11 @@ from flask import request, render_template, redirect
 from flask import url_for, flash
 from flask_login import login_required, current_user
 from . import main
-from app.models import Athlete, Coach, Message, Notification
+from app.models import Athlete, Scout, Message, Notification
 from app.forms import ProfileForm
 from app.extensions import db
+from app.__init__ import media
+from app.models import Media
 
 
 @main.route('/')
@@ -44,12 +46,11 @@ def dashboard():
                 "skills": current_user.athlete.skills,
                 "achievements": current_user.athlete.achievements
         }
-    elif current_user.coach:
+    elif current_user.scout:
         user_data = {
-                "role": "Coach",
-                "experience_years": current_user.coach.experience_years,
-                "coaching_style": current_user.coach.coaching_style,
-                "credentials": current_user.coach.credentials
+                "role": "Scout",
+                "experience_years": current_user.scout.experience_years,
+                "credentials": current_user.scout.credentials
         }
     # Rendering the dashboard template with the fetched data
     return render_template('dashboard.html', user=current_user,
@@ -83,10 +84,9 @@ def profile():
                 current_user.athlete.skills = form.skills.data
                 current_user.athlete.achievements = form.achievements.data
 
-            if current_user.coach:
-                current_user.coach.experience_years = form.experience_years.data
-                current_user.coach.coaching_style = form.coaching_style.data
-                current_user.coach.credentials = form.credentials.data
+            if current_user.scout:
+                current_user.scout.experience_years = form.experience_years.data
+                current_user.scout.credentials = form.credentials.data
 
         # saving changes made in the user profile
         db.session.commit()
@@ -105,3 +105,40 @@ def messages():
 @login_required
 def notifications():
     return render_template('notifications.html')
+
+
+@main.route('/upload_media', methods=['GET', 'POST'])
+@login_required
+def upload_media():
+    if request.method == 'POST':
+        if 'media' not in request.files:
+            flash('Please select a media file to upload')
+            return redirect(request.url)
+
+        file = request.files['media']
+        if file and media.file_allowed(file, file.filename):
+            filename = media.save(file)
+            file_url = media.url(filename)
+
+            if current_user.athlete:
+                athlete = current_user.athlete
+                new_media = Media(athlete_id=athlete.id,
+                        media_url=file_url,
+                        media_type=file.content_type,
+                        uploaded_at=db.func.now()
+                )
+                db.session.add(new_media)
+                db.session.commit()
+            elif current_user.scout:
+                scout = current_user.scout
+                new_media = Media(scout_id=scout.id,
+                        media_url=file_url,
+                        media_type=file.content_type,
+                        uploaded_at=db.func.now()
+                )
+                db.session.add(new_media)
+                db.session.commit()
+
+            flash('Media uploaded successfully!')
+            return redirect(url_for('main.profile'))
+    return render_template('upload_media.html')

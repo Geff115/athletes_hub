@@ -26,10 +26,17 @@ class BaseConfig:
     The Base class with common settings that applies
     to all environments.
     """
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv('SECRET_KEY', 'zXjFFzrhL3MNUuFZxc4xZOASRiV89t2UFPCdQtl4qzAwDZiTpkEsR9gzdYtOixwheuw')
 
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    UPLOADED_MEDIA_DEST = os.path.join(os.path.dirname(__file__), 'uploads/media')
+
+    # Configuration for uploaded files
+    if not os.path.exists(UPLOADED_MEDIA_DEST):
+        os.makedirs(UPLOADED_MEDIA_DEST)
+
 
 
 class DevelopmentConfig(BaseConfig):
@@ -92,7 +99,7 @@ class ProductionConfig(BaseConfig):
     Ensuring the application runs safely and efficiently in a
     production environment.
     """
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = BaseConfig.SECRET_KEY
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
     SESSION_COOKIE_SECURE = True
