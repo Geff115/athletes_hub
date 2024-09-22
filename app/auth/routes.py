@@ -84,24 +84,47 @@ def signup():
             role = form.role.data
             bio = form.bio.data
 
-        # Checking if the user exists in the database
-        user = User.get_user_by_username(username)
-        if user:
-            flash("User already exist, please login into your account")
-            return redirect(url_for('auth.login'))
-        # Creating the user and storing credentials in the database
-        elif user is None:
-            hashed_password = generate_password_hash(password)
-            user = User(username=username, email=email,
-                        password=hashed_password, age=age, first_name=first_name,
-                        last_name=last_name, sport=sport, height=height,
-                        country=country, state=state, role=role, bio=bio)
-            # Adding the user to the database
-            db.session.add(user)
-            db.session.commit()
-            # Success message
-            flash("Account created successfully! You will be redirected to login to your account.")
-            return redirect(url_for('auth.login'))
+            # Checking if the user exists in the database
+            user = User.get_user_by_username(username)
+            if user:
+                flash("User already exist, please login into your account")
+                return redirect(url_for('auth.login'))
+            # Creating the user and storing credentials in the database
+            else:
+                hashed_password = generate_password_hash(password)
+                user = User(username=username, email=email,
+                            password=hashed_password, age=age, first_name=first_name,
+                            last_name=last_name, sport=sport, height=height,
+                            country=country, state=state, role=role, bio=bio)
+                # Adding the user to the database
+                db.session.add(user)
+                db.session.commit()
+
+                if role == 'Athlete':
+                    # Extracting the athlete-related fields
+                    position = form.position.data
+                    achievements = form.achievements.data
+                    skills = form.skills.data
+
+                    athlete_record = Athlete(user_id=user.id, position=position,
+                                            achievements=achievements, skills=skills,)
+
+                    db.session.add(athlete_record)
+                    db.session.commit()
+
+                elif role == 'Scout':
+                    # Extracting the scout-related fields
+                    experience_years = form.experience_years.data
+                    credentials = form.credentials.data
+
+                    scout_record = Scout(user_id=user.id, experience_years=experience_years,
+                                        credentials=credentials)
+                    db.session.add(scout_record)
+                    db.session.commit()
+                
+                # Success message
+                flash("Account created successfully! You will be redirected to login to your account.")
+                return redirect(url_for('auth.login'))
     return render_template('signup.html', form=form)
 
 

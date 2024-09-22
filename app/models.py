@@ -74,7 +74,7 @@ class Athlete(db.Model):
     user = db.relationship('User', back_populates='athlete')
 
     # Defining relationship between Athlete and Media
-    media = db.relationship('Media', backref='athlete', lazy=True)
+    media = db.relationship('Media', back_populates='athlete', lazy=True)
 
     def __repr__(self):
         """
@@ -101,7 +101,7 @@ class Scout(db.Model):
     user = db.relationship('User', back_populates='scout')
 
     # Defining the relationship between Scout and Media
-    media = db.relationship('Media', backref='scout', lazy=True)
+    media = db.relationship('Media', back_populates='scout', lazy=True)
 
     def __repr__(self):
         """

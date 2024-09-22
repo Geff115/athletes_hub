@@ -26,9 +26,43 @@ class SignupForm(FlaskForm):
     height = StringField('Height', validators=[DataRequired()])
     country = StringField('Country', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
-    role = StringField('Role', validators=[DataRequired()])
+    role = SelectField('Role', choices=[('Athlete', 'Athlete'), ('Scout', 'Scout')], validators=[DataRequired()])
+
+    # Athlete specific fields
+    position = StringField('Position', validators=[DataRequired(message='What position do you play?')])
+    skills = StringField('Skills', validators=[DataRequired(message='What skills do you possess?')])
+    achievements = StringField('Achievements', validators=[DataRequired(message='Tell the world anything you boast of')])
+
+    # Scout specific fields
+    experience_years = StringField('Years of Experience', validators=[DataRequired()])
+    credentials = StringField('Scouting Credentials', validators=[DataRequired()])
+    
     bio = TextAreaField('Bio', validators=[DataRequired(message='Tell the world about you!')])
     submit = SubmitField('Sign up')
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+
+        # Validate fields based on the user's role
+        if self.role.data == 'Athlete':
+            if not self.position.data:
+                self.position.errors.append('This field is required for athletes.')
+                return False
+            if not self.skills.data:
+                self.skills.errors.append('This field is required for athletes.')
+                return False
+            if not self.achievements.data:
+                self.achievements.errors.append('This field is required for athletes.')
+                return False
+        elif self.role.data == 'Scout':
+            if not self.experience_years.data:
+                self.experience_years.errors.append('This field is required for scouts.')
+                return False
+            if not self.credentials.data:
+                self.credentials.errors.append('This field is required for scouts.')
+                return False
+        return True
 
 
 class ProfileForm(FlaskForm):
