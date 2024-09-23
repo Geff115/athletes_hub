@@ -12,7 +12,7 @@ from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from . import auth
-from app.models import User
+from app.models import User, Scout, Athlete
 from app.main import main
 from app.forms import LoginForm, SignupForm, ResetPasswordForm
 from app.extensions import db
@@ -70,7 +70,10 @@ def signup():
     """
     form = SignupForm()
     if request.method == 'POST':
+        print("POST request received")
         if form.validate_on_submit():
+            print("Form validated successfully")
+
             first_name = form.first_name.data
             last_name = form.last_name.data
             email = form.email.data
@@ -96,18 +99,26 @@ def signup():
                             password=hashed_password, age=age, first_name=first_name,
                             last_name=last_name, sport=sport, height=height,
                             country=country, state=state, role=role, bio=bio)
+
+                print(f"New user about to be created: {username}")
+
                 # Adding the user to the database
                 db.session.add(user)
                 db.session.commit()
+
+                # Log for debugging
+                print(f"User {username} created and saved to the database")
 
                 if role == 'Athlete':
                     # Extracting the athlete-related fields
                     position = form.position.data
                     achievements = form.achievements.data
                     skills = form.skills.data
+                    bio = form.bio.data
 
                     athlete_record = Athlete(user_id=user.id, position=position,
-                                            achievements=achievements, skills=skills,)
+                                            achievements=achievements, skills=skills, 
+                                            bio=bio)
 
                     db.session.add(athlete_record)
                     db.session.commit()
@@ -116,15 +127,19 @@ def signup():
                     # Extracting the scout-related fields
                     experience_years = form.experience_years.data
                     credentials = form.credentials.data
+                    bio = form.bio.data
 
                     scout_record = Scout(user_id=user.id, experience_years=experience_years,
-                                        credentials=credentials)
+                                        credentials=credentials, bio=bio)
                     db.session.add(scout_record)
                     db.session.commit()
                 
                 # Success message
                 flash("Account created successfully! You will be redirected to login to your account.")
                 return redirect(url_for('auth.login'))
+        else:
+            print("Form validation errors:", form.errors)
+
     return render_template('signup.html', form=form)
 
 

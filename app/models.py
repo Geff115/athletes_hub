@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
     country = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
     role = db.Column(db.String(50), nullable=False)
-    bio = db.Column(db.Text, nullable=True)
+    bio = db.Column(db.Text, nullable=True, default="")
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
     is_active = db.Column(db.Boolean, default=True)
 
@@ -65,9 +65,14 @@ class Athlete(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+    state = db.Column(db.String(50), nullable=False)
+    height = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     position = db.Column(db.String(50), nullable=False)
     achievements = db.Column(db.Text, nullable=True)
     skills = db.Column(db.Text, nullable=False)
+    bio = db.Column(db.Text, nullable=True, default="")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Defining relationship between the User and Athlete
@@ -92,9 +97,13 @@ class Scout(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+    state = db.Column(db.String(50), nullable=False)
+    height = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
     experience_years = db.Column(db.Integer, nullable=False)
     credentials = db.Column(db.Text, nullable=False)
-    bio = db.Column(db.Text, nullable=False)
+    bio = db.Column(db.Text, nullable=True, default="")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Defining the relationship between Scout and User

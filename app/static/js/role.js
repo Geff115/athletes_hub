@@ -5,20 +5,34 @@ document.addEventListener('DOMContentLoaded', function () {
 	const athleteFields = document.getElementById('athlete-fields');
 	const scoutFields = document.getElementById('scout-fields');
 
-	roleField.addEventListener("change", function() {
-		const isAthlete = this.value === "Athlete";
-		const isScout = this.value === "Scout";
+	function toggleRequired(state, fields) {
+		fields.forEach(field => {
+			const input = document.getElementById(field);
+			if (input) {
+				input.required = state;
+				input.disabled = !state;
+			}
+		});
+	}
+
+	function updateFields() {
+		const isAthlete = roleField.value === "Athlete";
+		const isScout = roleField.value === "Scout";
 
 		// Show/Hide based on the selected role
 		athleteFields.style.display = isAthlete ? "block" : "none";
 		scoutFields.style.display = isScout ? "block" : "none";
 
-		// Handle required attributes
-		document.getElementById("inputPosition").required = isAthlete;
-		document.getElementById("inputSkills").required = isAthlete;
-		document.getElementById("inputAchievements").required = isAthlete;
+		// Handle required attributes for athletes fields
+		toggleRequired(isAthlete, ['inputPosition', 'inputSkills', 'inputAchievements']);
 
-		document.getElementById("inputExperienceYears").required = isScout;
-		document.getElementById("inputCredentials").required = isScout;
-	});
+		// Handling required attributes for scouts fields
+		toggleRequired(isScout, ['inputExperienceYears', 'inputCredentials']);
+	}
+
+	// Trigger on page load to set initial state
+	updateFields();
+
+	// Trigger on role change
+	roleField.addEventListener("change", updateFields);
 });

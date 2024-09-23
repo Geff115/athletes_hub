@@ -30,21 +30,34 @@ class SignupForm(FlaskForm):
 
     # Athlete specific fields
     position = StringField('Position', validators=[DataRequired(message='What position do you play?')])
-    skills = StringField('Skills', validators=[DataRequired(message='What skills do you possess?')])
-    achievements = StringField('Achievements', validators=[DataRequired(message='Tell the world anything you boast of')])
+    skills = TextAreaField('Skills', validators=[DataRequired(message='What skills do you possess?')])
+    achievements = TextAreaField('Achievements', validators=[DataRequired(message='Tell the world anything you boast of')])
 
     # Scout specific fields
-    experience_years = StringField('Years of Experience', validators=[DataRequired()])
-    credentials = StringField('Scouting Credentials', validators=[DataRequired()])
+    experience_years = IntegerField('Years of Experience', validators=[DataRequired()])
+    credentials = TextAreaField('Scouting Credentials', validators=[DataRequired()])
     
     bio = TextAreaField('Bio', validators=[DataRequired(message='Tell the world about you!')])
     submit = SubmitField('Sign up')
 
-    def validate(self):
-        if not FlaskForm.validate(self):
+    
+    def __init__(self, *args, **kwargs):
+        super(SignupForm, self).__init__(*args, **kwargs)
+
+        # Conditionally clear validators based on the role
+        if self.role.data == 'Athlete':
+            self.experience_years.validators = []
+            self.credentials.validators = []
+        elif self.role.data == 'Scout':
+            self.position.validators = []
+            self.skills.validators = []
+            self.achievements.validators = []
+
+    def validate(self, extra_validators=None):
+        if not super(SignupForm, self).validate(extra_validators=extra_validators):
             return False
 
-        # Validate fields based on the user's role
+        # Custom validation logic for Athlete field
         if self.role.data == 'Athlete':
             if not self.position.data:
                 self.position.errors.append('This field is required for athletes.')
@@ -55,6 +68,11 @@ class SignupForm(FlaskForm):
             if not self.achievements.data:
                 self.achievements.errors.append('This field is required for athletes.')
                 return False
+            if not self.bio.data:
+                self.bio.errors.append('This field is required for athletes.')
+                return False
+
+        # Custom validation logic for Scout field
         elif self.role.data == 'Scout':
             if not self.experience_years.data:
                 self.experience_years.errors.append('This field is required for scouts.')
@@ -62,6 +80,10 @@ class SignupForm(FlaskForm):
             if not self.credentials.data:
                 self.credentials.errors.append('This field is required for scouts.')
                 return False
+            if not self.bio.data:
+                self.bio.errors.append('This field is required for athletes.')
+                return False
+
         return True
 
 

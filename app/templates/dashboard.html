@@ -62,16 +62,22 @@
         {% if user_data.role == 'Athlete' %}
 	  <p><strong>Country:</strong> {{ user_data.country }}</p>
 	  <p><strong>State:</strong> {{ user_data.state }}</p>
+	  <p><strong>Height:</strong> {{ user_data.height }}</p>
+	  <p><strong>Age:</strong> {{ user_data.age }}</p>
           <p><strong>Position:</strong> {{ user_data.position }}</p>
           <p><strong>Skills:</strong> {{ user_data.skills }}</p>
           <p><strong>Achievements:</strong> {{ user_data.achievements }}</p>
+	  <p><strong>Bio:</strong> {{ user_data.bio }}</p>
 
         <!-- Coach Information -->
         {% elif user_data.role == 'Scout' %}
 	  <p><strong>Country:</strong> {{ user_data.country }}</p>
 	  <p><strong>State:</strong> {{ user_data.state }}</p>
+	  <p><strong>Height:</strong> {{ user_data.height }}</p>
+	  <p><strong>Age:</strong> {{ user_data.age }}</p>
           <p><strong>Years of Experience:</strong> {{ user_data.experience_years }}</p>
           <p><strong>Credentials:</strong> {{ user_data.credentials }}</p>
+	  <p><strong>Bio:</strong> {{ user_data.bio }}</p>
         {% endif %}
       </div>
     </div>

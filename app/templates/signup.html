@@ -42,7 +42,7 @@
                                 <div class="col-md-6">
                                     {{ form.first_name.label(class="form-label") }}
                                     {{ form.first_name(class="form-control is-invalid" if form.first_name.errors else "form-control is-valid" if form.first_name.data 
-				    else "form-control", placeholder="First name", aria_label="First name") }}
+				    else "form-control", placeholder="First name", aria_label="First name", autocomplete="first name") }}
                                     {% if form.first_name.errors %}
                                         <div class="invalid-feedback">
                                             {% for error in form.first_name.errors %}
@@ -56,7 +56,7 @@
                                 <div class="col-md-6">
                                     {{ form.last_name.label(class="form-label") }}
                                     {{ form.last_name(class="form-control is-invalid" if form.last_name.errors else "form-control is-valid" if form.last_name.data 
-				    else "form-control", placeholder="Last name", aria_label="Last name") }}
+				    else "form-control", placeholder="Last name", aria_label="Last name", autocomplete="last name") }}
                                     {% if form.last_name.errors %}
                                         <div class="invalid-feedback">
                                             {% for error in form.last_name.errors %}
@@ -70,7 +70,7 @@
                                 <div class="col-12">
                                     {{ form.email.label(class="form-label") }}
                                     {{ form.email(class="form-control is-invalid" if form.email.errors else "form-control is-valid" if form.email.data 
-				    else "form-control", placeholder="text@example.com", id="inputEmail4") }}
+				    else "form-control", placeholder="text@example.com", id="inputEmail4", autocomplete="email") }}
                                     {% if form.email.errors %}
                                         <div class="invalid-feedback">
                                             {% for error in form.email.errors %}
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.age.label(class="form-label") }}
-                                    {{ form.age(class="form-control", id="inputAge") }}
+                                    {{ form.age(class="form-control", id="inputAge", autocomplete="age") }}
                                     {% if form.age.errors %}
                                         <div class="text-danger">
                                             {% for error in form.age.errors %}
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.height.label(class="form-label") }}
-                                    {{ form.height(class="form-control", id="inputHeight") }}
+                                    {{ form.height(class="form-control", id="inputHeight", autocomplete="height") }}
                                     {% if form.height.errors %}
                                         <div class="text-danger">
                                             {% for error in form.height.errors %}
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.username.label(class="form-label") }}
-                                    {{ form.username(class="form-control", id="inputUsername") }}
+                                    {{ form.username(class="form-control", id="inputUsername", autocomplete="username") }}
                                     {% if form.username.errors %}
                                         <div class="text-danger">
                                             {% for error in form.username.errors %}
@@ -117,7 +117,7 @@
                                 <div class="col-md-6">
                                     {{ form.password.label(class="form-label") }}
                                     {{ form.password(class="form-control is-invalid" if form.password.errors else "form-control is-valid" if form.password.data 
-				    else "form-control", id="inputPassword4") }}
+				    else "form-control", id="inputPassword4", autocomplete="current-password") }}
                                     {% if form.password.errors %}
                                         <div class="invalid-feedback">
                                             {% for error in form.password.errors %}
@@ -138,29 +138,29 @@
                                     </select>
 				    <!-- Athlete-specific fields -->
 				    <div id="athlete-fields" style="display:none;">
-					    <div class="mb-3" id="inputPosition">
-					    	    {{ form.position.label(class="form-label") }}
-						    {{ form.position(class="form-control") }}
-					    </div>
-					    <div class="mb-3" id="inputSkills">
-						    {{ form.skills.label(class="form-label") }}
-					    	    {{ form.skills(class="form-control") }}
-					    </div>
-					    <div class="mb-3" id="inputAchievements">
-						    {{ form.achievements.label(class="form-label") }}
-						    {{ form.achievements(class="form-control") }}
-					    </div>
+					<div class="mb-3">
+					    {{ form.position.label(class="form-label") }}
+					    {{ form.position(class="form-control", id="inputPosition") }}
+					</div>
+					<div class="mb-3">
+					    {{ form.skills.label(class="form-label") }}
+					    {{ form.skills(class="form-control", id="inputSkills") }}
+					</div>
+					<div class="mb-3">
+					    {{ form.achievements.label(class="form-label") }}
+					    {{ form.achievements(class="form-control", id="inputAchievements") }}
+					</div>
 				    </div>
 				    <!-- Scout-specific fields -->
 				    <div id="scout-fields" style="display:none;">
-					    <div class="mb-3" id="inputExperienceYears">
-					    	    {{ form.experience_years.label(class="form-label") }}
-					    	    {{ form.experience_years.label(class="form-control") }}
-					    </div>
-					    <div class="mb-3" id="inputCredentials">
-						    {{ form.credentials.label(class="form-label") }}
-						    {{ form.credentials(class="form-control") }}
-					    </div>
+					<div class="mb-3">
+					    {{ form.experience_years.label(class="form-label") }}
+					    {{ form.experience_years(class="form-control", id="inputExperienceYears") }}
+					</div>
+					<div class="mb-3">
+					    {{ form.credentials.label(class="form-label") }}
+					    {{ form.credentials(class="form-control", id="inputCredentials") }}
+					</div>
 				    </div>
                                     {% if form.role.errors %}
                                         <div class="text-danger">
@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.country.label(class="form-label") }}
-                                    {{ form.country(class="form-control", id="inputCountryName") }}
+                                    {{ form.country(class="form-control", id="inputCountryName", autocomplete="country") }}
                                     {% if form.country.errors %}
                                         <div class="text-danger">
                                             {% for error in form.country.errors %}
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ form.state.label(class="form-label") }}
-                                    {{ form.state(class="form-control", id="inputState") }}
+                                    {{ form.state(class="form-control", id="inputState", autocomplete="state") }}
                                     {% if form.state.errors %}
                                         <div class="text-danger">
                                             {% for error in form.state.errors %}
