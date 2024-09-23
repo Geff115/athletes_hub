@@ -36,7 +36,7 @@ def dashboard():
     # Fetch user's messages and notifications
     messages = Message.query.filter_by(receiver_id=current_user.id).all()
     notifications = Notification.query.filter_by(user_id=current_user.id).all()
-    # user = User.query.filter_by(id=current_user.id).first()
+    user = User.query.filter_by(id=current_user.id).first()
 
     # Check if the user is an Athlete or Coach, and fetch data accordingly
     user_data = {}
@@ -58,7 +58,7 @@ def dashboard():
                 "country": current_user.scout.country,
                 "state": current_user.scout.state,
                 "height": current_user.scout.height,
-                "age": current_user.scoute.age,
+                "age": current_user.scout.age,
                 "experience_years": current_user.scout.experience_years,
                 "credentials": current_user.scout.credentials,
                 "bio": current_user.scout.bio
