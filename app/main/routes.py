@@ -70,14 +70,14 @@ def dashboard():
     )
 
 
-@main.route('/profile', methods=['GET', 'POST'])
+@main.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
-def profile():
+def edit_profile():
     """
     This route allows users to view and update their profile
     information 
     """
-    form = ProfileForm()
+    form = EditProfileForm()
     if request.method == 'POST':
         # The user can choose to update their profile information
         if form.validate_on_submit():
@@ -104,7 +104,7 @@ def profile():
         flash("Changes in your profile has been update successfully! Taking you back to your dashboard.")
         return redirect(url_for('main.dashboard'))
     # on GET requests, it returns the profile page with the user's current information
-    return render_template('profile.html', user=current_user, form=form)
+    return render_template('edit_profile.html', user=current_user, form=form)
 
 @main.route('/messages')
 @login_required
@@ -153,3 +153,48 @@ def upload_media():
             flash('Media uploaded successfully!')
             return redirect(url_for('main.profile'))
     return render_template('upload_media.html')
+
+
+@main.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    if request.method == 'POST':
+        query = request.form.get('query')
+        if query:
+            # Querying the Users table in the database and fetching the searched query
+
+            # Debugging print statement to track search query
+            print(f"Search query received: {query}")
+
+            results = db.session.query(User).join(Athlete, isouter=True).join(Scout, isouter=True).filter(
+                    (User.username.contains(query)) | 
+                    (User.role.contains(query)) | 
+                    (User.sport.contains(query)) | 
+                    (User.height.contains(query)) |
+                    (User.country.contains(query)) | 
+                    (User.state.contains(query)) | 
+                    (User.age.contains(query)) | 
+                    (Athlete.achievements.contains(query)) | 
+                    (Athlete.position.contains(query)) | 
+                    (Scout.experience_years.contains(query)) | 
+                    (Scout.credentials.contains(query))
+            ).all()
+
+            # Debugging line
+            print(f"Results found: {results}")
+
+            if not results:
+                flash('No results found matching your query.')
+                return render_template('search.html', results=[])
+            return render_template('search.html', results=results)
+
+        flash('Please provide a valid search query.')
+        return redirect(url_for('main.search'))
+    return render_template('search.html', results=[])
+
+
+@main.route('/user/<int:user_id>', methods=['GET'])
+@login_required
+def user_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('profile.html', user=user)

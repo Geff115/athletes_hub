@@ -22,7 +22,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <!-- Use Flask-WTF form object and CSRF token -->
-        <form method="POST" action="{{ url_for('main.profile') }}">
+        <form method="POST" action="{{ url_for('main.edit_profile') }}">
           {{ form.hidden_tag() }}
 
           <!-- General Information -->

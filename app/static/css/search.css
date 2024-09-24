@@ -1,0 +1,83 @@
+/* Container styling for search results */
+.container {
+	max-width: 90%;
+	margin: 2rem auto;
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 2rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	color: #333;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+/* Styling for the results table */
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table thead th {
+	background-color: #f8f9fa;
+	color: #333;
+	font-size: 1.1rem;
+	padding: 1rem;
+	text-align: left;
+	border-bottom: 2px solid #dee2e6;
+}
+
+table tbody tr:nth-child(odd) {
+	background-color: #f9f9f9;
+}
+
+table tbody tr:nth-child(even) {
+	background-color: #ffffff;
+}
+
+table tbody td {
+	padding: 1rem;
+	color: #555;
+	border-bottom: 1px solid #dee2e6;
+}
+
+/* Add hover effect to table rows */
+table tbody tr:hover {
+	background-color: #f1f1f1;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+	.container {
+		padding: 1rem;
+	}
+
+	table thead {
+		display: none;
+	}
+
+	table tbody tr {
+		display: block;
+		margin-bottom: 1rem;
+		border: 1px solid #ddd;
+	}
+
+	table tbody td {
+		display: block;
+		text-align: right;
+		font-size: 0.9rem;
+		padding: 0.5rem;
+	}
+
+	table tbody td:before {
+		content: attr(data-label);
+		float: left;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Search page</title>
+		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+	</head>
+	<body>
+		<div class="container">
+			<h2>Search for Users</h2>
+			<!-- Search form -->
+
+			<form method="POST" action="{{ url_for('main.search') }}">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="Enter username, role, sport, etc." name="query">
+					<button class="btn btn-primary" type="submit">Search</button>
+				</div>
+			</form>
+
+			<h2>Search Results</h2>
+			<table id="results-table" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>Role</th>
+						<th>Sport</th>
+						<th>Height</th>
+						<th>Country</th>
+						<th>State</th>
+						<th>Age</th>
+						<th>Achievements (athletes-related)</th>
+						<th>Position (athletes-related)</th>
+						<th>Years of Experience (scout-related)</th>
+						<th>Credentials (scout-related)</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if results %}
+						{% for user in results %}
+							<tr>
+								{% if user %}
+								<td><a href="{{ url_for('main.user_profile', user_id=user.id) }}">"{{ user.username }}</a></td>
+									<td>{{ user.role }}</td>
+									<td>{{ user.sport }}</td>
+									<td>{{ user.height }}</td>
+									<td>{{ user.country }}</td>
+									<td>{{ user.state }}</td>
+									<td>{{ user.age }}</td>
+									<td>{% if user.athlete %}{{ user.athlete.achievements }}{% endif %}</td>
+									<td>{% if user.athlete %}{{ user.athlete.position }}{% endif %}</td>
+									<td>{% if user.scout %}{{ user.scout.experience_years }}{% endif %}</td>
+									<td>{% if user.scout %}{{ user.scout.credentials }}{% endif %}</td>
+								{% else %}
+									<td colspan="12">No user found</td>
+								{% endif %}
+							</tr>
+						{% endfor %}
+					{% else %}
+						<!-- Show this message only if there was an actual search performed -->
+						{% if request.form.get('query') %}
+							<tr>
+								<td colspan="11">No results found for your query.</td>
+							</tr>
+						{% endif %}
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+		<script src="https://cdn.datatables.net/2.1.7/js/jquery.dataTables.min.js"></script>
+		<script>
+			$(document).ready(function() {
+							$('#results-table').DataTable(); // Initializing DataTable
+			});
+		</script>
+	</body>
+</html>

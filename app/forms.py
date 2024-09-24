@@ -87,7 +87,7 @@ class SignupForm(FlaskForm):
         return True
 
 
-class ProfileForm(FlaskForm):
+class EditProfileForm(FlaskForm):
     """
     The profile form for users intending to update
     their profile information
