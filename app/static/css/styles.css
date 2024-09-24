@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
 
 :root {
@@ -9,20 +8,14 @@
     --box-shadow: 0 8px 22px rgba(0,0,0,0.1);
 }
 
-html, body {
-	height: 100%;
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-}
-
 body {
-    font-family: "Sora", sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    font-family: "Sora", sans-serif;
     min-height: 100vh;
-    color: var(--body);
 }
 
 main {
@@ -36,6 +29,10 @@ h1,h2,h3,h4,h5,h6,
 .display-4 {
     color: var(--dark);
     font-weight: 700;
+}
+
+nav {
+    box-shadow: var(--box-shadow);
 }
 
 a {
@@ -69,7 +66,8 @@ a {
     justify-content: center;
     flex-direction: column;
     padding-bottom: 20px;
-    padding-top: 10px;
+    padding-top: 1px;
+    overflow: hidden;
 }
 
 .custom-container {
@@ -84,13 +82,32 @@ a {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0);
+    background-color: var(--dark);
     z-index: -1;
+}
+
+.inner-container, .container {
+    padding: 0;
+    margin: auto;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+/* Remove spacing around the slideshow */
+.carousel-inner, .carousel-item, .carousel, img {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 600px;
 }
 
 .footer {
 	position: relative;
-	background-color: #f8f9fa;
+	background-color: var(--white);
 	padding: 10px;
 	text-align: center;
 	width: 100%;
@@ -100,11 +117,11 @@ a {
 
 .footer p {
 	font-size: 15px;
-	color: #666;
+	color: var(--body);
 }
 
 .hero-text span {
-	color: #000000;
+	color: var(--dark);
 }
 
 .hero-text p {
