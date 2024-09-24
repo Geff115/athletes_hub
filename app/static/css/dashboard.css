@@ -1,41 +1,141 @@
-/* Box-shadow for user profile and navbar */
+/* Box-shadow for user profile and navbar 
 .box-shadow {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* Background color for offcanvas and navbar */
-.offcanvas-custom, .navbar-custom {
+/* .offcanvas-custom, .navbar-custom {
 	background-color: #B87333; /* Bronze color background */
+
+.navbar-custom {
+	background: linear-gradient(90deg, #FF8C00, #FF4500);
 }
 
-/* White text for the navbar */
+.offcanvas-custom {
+	background-color: #343a40;
+	color: white;
+}
+
+.offcanvas-body a {
+	color: white;
+}
+
+.offcanvas-body a:hover {
+	color: #FF8C00;
+}
+
+/* User info card */
+.user-card {
+	background: white;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.user-card h5 {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.user-card p {
+	font-size: 1rem;
+	margin: 0.5rem 0;
+}
+
+.icon-inline {
+	margin-right: 10px;
+}
+
+
+/* White text for the navbar 
 .navbar-custom h1 {
 	color: #fff;
 }
 
-/* White text for offcanvas items */
+ White text for offcanvas items 
 .offcanvas-custom .nav-link {
 	color: #fff;
 }
 
-/* Change color on hover */
+ Change color on hover 
 .offcanvas-custom .nav-link:hover {
 	color: #adb5bd;
 }
 
-/* Offcanvas custom width */
+ Offcanvas custom width 
 .offcanvas-custom {
 	width: 300px !important;
 }
 
-/* Center-align user profile */
+ Center-align user profile 
 #main-content {
 	text-align: center;
 }
+*/
 
 .logo {
 	width: 60px;
-	height: auto;
+	height: 50px;
 	margin-right: 10px;
 	border-radius: 5px;
+}
+
+/* Light Mode (default) */
+body.light-mode {
+	background-color: #f8f9fa; /* Light background */
+	color: #212529; /* Dark text */
+}
+
+.navbar-custom.light-mode {
+	background-color: #FF8C00;
+}
+
+.offcanvas-custom.light-mode {
+	background-color: #FF8C00;
+	color: white;
+}
+
+.btn-outline-light.light-mode {
+	color: #212529;
+	border-color: #212529;
+}
+
+.light-mode.user-card {
+	background-color: white;
+	color: black;
+}
+
+
+/* Dark Mode */
+body.dark-mode {
+	background-color: #212529; /* Dark background */
+	color: #f8f9fa; /* Light text */
+}
+
+.navbar-custom.dark-mode {
+	background-color: ##B87333;
+}
+
+.offcanvas-custom.dark-mode {
+	background-color: #343a40;
+	color: #f8f9fa;
+}
+
+.btn-outline-light.dark-mode {
+	color: #f8f9fa;
+	border-color: #f8f9fa;
+}
+
+.dark-mode.user-card {
+	background-color: #2c2c2c; /* Darker background for the card */
+	color: #f0f0f0; /* Light text color to make it readable */
+}
+
+.dark-mode.box-shadow {
+	box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1); /* Softer shadow in dark mode */
+}
+
+/* Adjust header and other elements for dark mode */
+.dark-mode h5, .dark-mode p {
+	color: #f0f0f0; /* Lighten the text to contrast with dark background */
 }

@@ -43,10 +43,10 @@ def dashboard():
     if current_user.athlete:
         user_data = {
                 "role": "Athlete",
-                "country": current_user.athlete.country,
-                "state": current_user.athlete.state,
-                "height": current_user.athlete.height,
-                "age": current_user.athlete.age,
+                "country": current_user.country,
+                "state": current_user.state,
+                "height": current_user.height,
+                "age": current_user.age,
                 "position": current_user.athlete.position,
                 "skills": current_user.athlete.skills,
                 "achievements": current_user.athlete.achievements,
@@ -55,10 +55,10 @@ def dashboard():
     elif current_user.scout:
         user_data = {
                 "role": "Scout",
-                "country": current_user.scout.country,
-                "state": current_user.scout.state,
-                "height": current_user.scout.height,
-                "age": current_user.scout.age,
+                "country": current_user.country,
+                "state": current_user.state,
+                "height": current_user.height,
+                "age": current_user.age,
                 "experience_years": current_user.scout.experience_years,
                 "credentials": current_user.scout.credentials,
                 "bio": current_user.scout.bio
