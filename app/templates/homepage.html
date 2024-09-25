@@ -26,6 +26,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
     <title>Welcome to Athletes Hub</title>
@@ -119,7 +120,7 @@
 
 		    		<!-- Hero text section -->
 		    		<div class="col-lg-7 text-center">
-                        <h1 class="display-4 text-white">Welcome to Athletes Hub</h1>
+                        <h1 class="display-4 mt-3 text-white">Welcome to Athletes Hub</h1>
                         <p class="text-white my-3">Our mission is to help you connect with scouts from around the world, irrespective of your social status, 
 		        			background, or beliefs.
 		        			We aim to breach the limitations that comes with playing your sport at a professional level here in Africa. Due to the large number of youths 
@@ -133,6 +134,44 @@
             </div>
         </div>
     </main>
+
+	<!-- About us section -->
+	 <section id = "about-us">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-md-8 mx-auto text-center">
+					<h1>About Us</h1>
+					<p>This project is part of our alx course portfolio project submission. Our goal was to create accessible tools for African athletes seeking global reach.</p>
+				</div>
+			</div>
+			<div class="row g-3 text-center">
+				<div class="col-lg-6">
+					<div class="team-member card-effect">
+						<img src="{{ url_for('static', filename='img/Reinhardt 20191105_175820.jpg') }}" alt="Profile image of contributor">
+						<h5 class="mb-0 mt-4">Reinhardt Bett</h5>
+						<p>Full Stack Developer</p>
+						<div class="social-icons">
+							<a href="https://x.com/BettReinhardt" target="_blank"><i class="bi bi-twitter-x"></i></a>
+							<a href="https://www.linkedin.com/in/reinhardt-bett-5a64a2240/" target="_blank"><i class="bi bi-linkedin"></i></a>
+							<a href="https://github.com/Reinhardbett" target="_blank"><i class="bi bi-github"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="team-member card-effect">
+						<img src="{{ url_for('static', filename='img/Reinhardt 20191105_175820.jpg') }}" alt="Profile image of contributor">
+						<h5 class="mb-0 mt-4">Reinhardt Bett</h5>
+						<p>Full Stack Developer</p>
+						<div class="social-icons">
+							<a href="https://x.com/BettReinhardt" target="_blank"><i class="bi bi-twitter-x"></i></a>
+							<a href="https://www.linkedin.com/in/reinhardt-bett-5a64a2240/" target="_blank"><i class="bi bi-linkedin"></i></a>
+							<a href="https://github.com/Reinhardbett" target="_blank"><i class="bi bi-github"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	 </section>
 
     <!-- Footer --->
     <footer class="footer">
