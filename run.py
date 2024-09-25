@@ -12,4 +12,4 @@ app = create_app()
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', debug=True)
