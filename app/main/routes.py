@@ -10,7 +10,7 @@ from flask import url_for, flash
 from flask_login import login_required, current_user
 from . import main
 from app.models import Athlete, Scout, Message, Notification, User
-from app.forms import ProfileForm
+from app.forms import EditProfileForm
 from app.extensions import db
 from app.__init__ import media
 from app.models import Media
@@ -106,10 +106,38 @@ def edit_profile():
     # on GET requests, it returns the profile page with the user's current information
     return render_template('edit_profile.html', user=current_user, form=form)
 
-@main.route('/messages')
+
+@main.route('/send_message/<int:recipient_id>', methods=['POST'])
 @login_required
-def messages():
-    return render_template('messages.html')
+def send_message(recipient_id):
+    # Fetch the receiver from the database
+    recipient = User.query.get_or_404(recipient_id)
+    content = request.form['message']
+
+    # Create New message
+    new_message = Message(
+            sender_id=current_user.id,
+            receiver_id=recipient.id,
+            content=content,
+            status=MessageStatus.UNREAD.value,
+            timestamp=datetime.utcnow()
+    )
+
+    try:
+        db.session.add(new_message)
+        db.session.commit()
+        flash(f"Message sent to {recipient.username}!")
+
+        # Send notification to recipient
+        socketio.emit('new_message', {
+            'sender': current_user.username,
+            'receiver': recipient.username,
+            'content': content,
+            'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+        }, namespace='/messages', room=recipient.id)
+    except Exception as e:
+        flash(f"An error occurred: {str(e)}")
+        return redirect(url_for('main.profile', username=recipient.username))
 
 
 @main.route('/notifications')
@@ -128,31 +156,83 @@ def upload_media():
 
         file = request.files['media']
         if file and media.file_allowed(file, file.filename):
+            try:
+                filename = media.save(file)
+                file_url = media.url(filename)
+
+                if current_user.athlete:
+                    athlete = current_user.athlete
+                    new_media = Media(athlete_id=athlete.id,
+                            media_url=file_url,
+                            media_type=file.content_type,
+                            uploaded_at=db.func.now()
+                    )
+                elif current_user.scout:
+                    scout = current_user.scout
+                    new_media = Media(scout_id=scout.id,
+                            media_url=file_url,
+                            media_type=file.content_type,
+                            uploaded_at=db.func.now()
+                    )
+
+                db.session.add(new_media)
+                db.session.commit()
+                flash('Media uploaded successfully!')
+                return redirect(url_for('main.profile'))
+
+            except Exception as e:
+                flash(f'An error occurred: {str(e)}')
+                return redirect(request.url)
+
+        flash('Invalid media file format')
+        return redirect(request.url)
+    return render_template('upload_media.html')
+
+
+@main.route('/upload_profile_picture', methods=['POST'])
+@login_required
+def upload_profile_picture():
+    if 'media' not in request.files:
+        flash('Please select a profile picture to upload')
+        return redirect(url_for('main.profile', username=current_user.username))
+
+    file = request.files['media']
+    if file and media.file_allowed(file, file.filename):
+        try:
+            # Saving the file and get the URL
             filename = media.save(file)
             file_url = media.url(filename)
 
+            # Check if current user is an athlete or scout and save profile picture accordingly
             if current_user.athlete:
                 athlete = current_user.athlete
-                new_media = Media(athlete_id=athlete.id,
+                new_media = Media(
+                        athlete_id=athlete.id,
                         media_url=file_url,
-                        media_type=file.content_type,
+                        media_type='profile_image',
                         uploaded_at=db.func.now()
                 )
-                db.session.add(new_media)
-                db.session.commit()
             elif current_user.scout:
                 scout = current_user.scout
-                new_media = Media(scout_id=scout.id,
+                new_media = Media(
+                        scout_id=scout.id,
                         media_url=file_url,
-                        media_type=file.content_type,
+                        media_type='profile_image',
                         uploaded_at=db.func.now()
                 )
-                db.session.add(new_media)
-                db.session.commit()
 
-            flash('Media uploaded successfully!')
-            return redirect(url_for('main.profile'))
-    return render_template('upload_media.html')
+            db.session.add(new_media)
+            db.session.commit()
+            flash('Profile picture uploaded successfully!')
+            return redirect(url_for('main.profile', username=current_user.username))
+
+        except Exception as e:
+            flash(f'An error occurred: {str(e)}')
+            app.logger.error(str(e))
+            return redirect(request.url)
+
+    flash('Invalid file format')
+    return redirect(request.url)
 
 
 @main.route('/search', methods=['GET', 'POST'])
@@ -162,10 +242,6 @@ def search():
         query = request.form.get('query')
         if query:
             # Querying the Users table in the database and fetching the searched query
-
-            # Debugging print statement to track search query
-            print(f"Search query received: {query}")
-
             results = db.session.query(User).join(Athlete, isouter=True).join(Scout, isouter=True).filter(
                     (User.username.contains(query)) | 
                     (User.role.contains(query)) | 
@@ -180,9 +256,6 @@ def search():
                     (Scout.credentials.contains(query))
             ).all()
 
-            # Debugging line
-            print(f"Results found: {results}")
-
             if not results:
                 flash('No results found matching your query.')
                 return render_template('search.html', results=[])
@@ -193,8 +266,15 @@ def search():
     return render_template('search.html', results=[])
 
 
-@main.route('/user/<int:user_id>', methods=['GET'])
+@main.route('/profile')
 @login_required
-def user_profile(user_id):
-    user = User.query.get_or_404(user_id)
-    return render_template('profile.html', user=user)
+def profile():
+    user = current_user
+    profile_picture = None
+
+    if user.athlete:
+        profile_picture = Media.query.filter_by(athlete_id=user.athlete.id, media_type='profile_image').first()
+    elif user.scout:
+        profile_picture = Media.query.filter_by(scout_id=user.scout.id, media_type='profile_image').first()
+
+    return render_template('profile.html', user=user, profile_picture=profile_picture)

@@ -33,13 +33,14 @@ class MessageNamespace(Namespace):
     
     def on_join(self, data):
         # Add a User to a specifc room, (user-to-user conversation)
-        room = data['room']
+        receiver_id = data.get('receiver_id')
+        room = f'{min(current_user.id, receiver_id)}_{max(current_user.id, receiver_id)}'
         join_room(room)
 
         # Fetch previous messages from the database
-        previous_messages = Message.query.filter_by(room=room).all()
+        previous_messages = Message.query.filter_by(room=room).order_by(Message.timestamp.desc()).limit(20).all()
 
-        # Send previous messages to the client who just joined
+        # Send previous messages to the client who just joinedh
         for message in previous_messages:
             emit('new_message', {'user': message.sender_id, 'message': message.content}, to=request.sid)
 
@@ -71,14 +72,16 @@ class MessageNamespace(Namespace):
                 db.session.commit()
 
                 # Emmitting the message to the receiver (or broadcast to room)
+                room = f'{min(current_user.id, receiver_id)}_{max(current_user.id, receiver_id)}'
                 emit('receive_message', {
                     'message': message_content,
                     'sender': current_user.username,
-                    'timestamp': new_message.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                    'timestamp': new_message.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ'),
                     'receiver_id': receiver_id
-                }, room=receiver_id)
+                }, room=room)
             except Exception as e:
                 print(f"Error saving message {e}")
+                emit('error', {'message': 'Failed to send message'}, room=request.sid)
                 db.session.rollback()
 
 
@@ -115,5 +118,5 @@ class NotificationNamespace(Namespace):
         # Emitting the notification to the receiver
         emit('new_notification', {
             'message': content,
-            'timestamp': new_notification.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-        }, broadcast=True)
+            'timestamp': new_notification.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ')
+        }, room=receiver_id)

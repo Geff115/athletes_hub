@@ -194,8 +194,8 @@ class Media(db.Model):
     __tablename__ = 'media'
 
     id = db.Column(db.Integer, primary_key=True)
-    athlete_id = db.Column(db.Integer, db.ForeignKey('athletes.id'), nullable=False)
-    scout_id = db.Column(db.Integer, db.ForeignKey('scouts.id'), nullable=False)
+    athlete_id = db.Column(db.Integer, db.ForeignKey('athletes.id'), nullable=True)
+    scout_id = db.Column(db.Integer, db.ForeignKey('scouts.id'), nullable=True)
     media_url = db.Column(db.String(200), nullable=False)
     media_type = db.Column(db.String(20), nullable=False)  # 'video', 'image', etc.
     uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)

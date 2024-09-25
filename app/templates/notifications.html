@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, inital-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Notifications</title>
 
 		<!-- Bootstrap 5 CSS -->
@@ -13,11 +13,13 @@
 	<body>
 		<div class="container">
 			<!-- Notifications Section -->
-			<div id="notifications">
+			<div id="notifications" class="my-4">
 				<h3>Your Notifications</h3>
-				<ul>
+				<ul id="notification-list" class="list-group">
 					{% for notification in notifications %}
-						<li>{{ notification.message }} ({{ notification.timestamp }})</li>
+						<li class="list-group-item">
+							{{ notification.message }} ({{ notification.timestamp }})
+						</li>
 					{% endfor %}
 				</ul>
 			</div>
