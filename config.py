@@ -20,6 +20,7 @@ DB_USER = os.getenv('ATHLETES_HUB_DB_USER', 'athlete')
 DB_PWD = quote_plus(os.getenv('ATHLETES_HUB_DB_PWD', 'Sport@123'))
 DB_HOST = os.getenv('ATHLETES_HUB_DB_HOST', 'localhost')
 DB_PORT = os.getenv('ATHLETES_HUB_DB_PORT', '3306')
+DB = os.getenv('ATHLETES_HUB_DB')
 
 class BaseConfig:
     """
@@ -28,8 +29,8 @@ class BaseConfig:
     """
     SECRET_KEY = os.getenv('SECRET_KEY', 'zXjFFzrhL3MNUuFZxc4xZOASRiV89t2UFPCdQtl4qzAwDZiTpkEsR9gzdYtOixwheuw')
 
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
-    print(f"Connecting to: mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db")
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB}"
+    print(f"Connecting to: mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB}")
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -103,7 +104,7 @@ class ProductionConfig(BaseConfig):
     """
     DEBUG = False
     SECRET_KEY = BaseConfig.SECRET_KEY
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/athletes_hub_db"
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB}"
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SECURE_SSL_REDIRECT = True
